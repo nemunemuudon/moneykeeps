@@ -1,0 +1,30 @@
+.header{
+    background-color: #26d0c9;
+    color: #fff;
+    height: 90px;
+    font-size:50px;
+    width: 100%;
+    display: block;
+    clear: both;
+}
+body {
+    display: block;
+}
+#calendar {
+    max-width: 850px;
+    min-width: 600px;
+    max-height: fit-content;
+    width: 850px;
+}
+#msgarea {
+    position:relative;
+    top: 10px;
+    left: 100px;
+    margin-left: 10px;
+    width: 400px;
+    border: 1px solid;
+}
+/* イベントのタイトルに時間を表示させない */
+.fc-event-time {
+    display: none;
+}
