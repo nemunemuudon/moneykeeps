@@ -2,7 +2,7 @@
 define("DB_HOST","localhost");
 define("DB_USER","root");
 define("DB_PASS","root");
-define("DB_NAME","gohan");
+define("DB_NAME","moneykeeps");
 define("DB_CHARSET","utf8mb4");
 
 //session_start();
@@ -28,40 +28,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST ) {
 // 検索と表示
 // DB接続
 // DB検索   
-$sql = "SELECT * FROM PHOTO";
+$sql = "SELECT * FROM PRODUCT";
 //SQLの実行準備
 $meals = [];
 if ($result = $instance->query($sql)) {
     while ($row = $result->fetch_assoc()) {
-        $photonum = $row['photonum'];
-        $photoname = $row['PHOTONAME'];
+        $num = $row['NUM'];
+        $photo = $row['PHOTO'];
         $date = $row['DATE'];
         $category = $row['CATEGORY'];
-        $calory = $row['CALORY'];
+        $money = $row['MONEY'];
         $name = $row['NAME'];
-        $meals += [ "$photonum" => ["$photoname", "$date", "$category", "$calory", "$name"]];
+        $memo = $row['MEMO'];
+        $meals += [ "$num" => ["$photo", "$date", "$category", "$money", "$name","$memo"]];
     }
 }
 
 // 更新
 function update($mysql) {
-    if (isset($_FILES['photoname']) && is_uploaded_file($_FILES['photoname']['tmp_name'])) {
+    if (isset($_FILES['photo']) && is_uploaded_file($_FILES['photo']['tmp_name'])) {
         error_log('upload');
-        $image_name = uploadImage($_FILES['photoname']);
+        $image_name = uploadImage($_FILES['photo']);
         error_log('upload ok');
     } else {
-        $image_name =  $_POST['prev_photoname'];
+        $image_name =  $_POST['prev_photo'];
     }
 
     // ===== 更新処理 =====
-    $sql = "UPDATE PHOTO SET PHOTONAME = ?, DATE = ?,CATEGORY = ?, CALORY = ?, NAME =? where photonum = ?";
+    $sql = "UPDATE PRODUCT SET PHOTO = ?, DATE = ?,CATEGORY = ?, MONEY = ?, NAME =? , MEMO =? where num = ?";
     $_POST["name"];
 
     if($stmt = $mysql -> prepare($sql)){
         error_log("call prepared statement");
         //SQLの実行準備成功
         //変数のバインド（商品番号,商品名,カテゴリ,値段）
-        $stmt -> bind_param("sssisi",$image_name,$_POST["date"],$_POST["category"],$_POST["calory"],$_POST["name"], $_POST['photonum']);
+        $stmt -> bind_param("sssisis",$image_name,$_POST["date"],$_POST["category"],$_POST["money"],$_POST["name"], $_POST['num'],$_POST["memo"]);
         //SQLの実行
         $stmt -> execute();
         error_log("execute ps");
@@ -73,20 +74,20 @@ function update($mysql) {
 // 登録
 function create($mysql) {
     error_log('create');
-    if (isset($_FILES['photoname']) && is_uploaded_file($_FILES['photoname']['tmp_name'])) {
+    if (isset($_FILES['photo']) && is_uploaded_file($_FILES['photo']['tmp_name'])) {
         error_log('upload');
-        $image_name = uploadImage($_FILES['photoname']);
+        $image_name = uploadImage($_FILES['photo']);
         error_log('upload ok');
     }
 
-    $sql = "INSERT INTO PHOTO(PHOTONAME,DATE,CATEGORY,CALORY,NAME) VALUES(?,?,?,?,?)";
+    $sql = "INSERT INTO PRODUCT(NUM,DATE,NAME,MONEY,CATEGORY,PHOTO,MEMO) VALUES(?,?,?,?,?,?)";
     //$_POST["name"];
     /*<p class="text-red-600"><?= $errmessage?></p>*/
     if($stmt = $mysql -> prepare($sql)){
         error_log("call prepared statement");
         //SQLの実行準備成功
         //変数のバインド（商品番号,商品名,カテゴリ,値段）
-        $stmt -> bind_param("sssis",$image_name,$_POST["date"],$_POST["category"],$_POST["calory"],$_POST["name"]);
+        $stmt -> bind_param("sssiss",$image_name,$_POST["date"],$_POST["category"],$_POST["money"],$_POST["name"],$_POST["memo"]);
         //SQLの実行
         $stmt -> execute();
         error_log("execute ps");
@@ -100,16 +101,16 @@ function create($mysql) {
 function delete($mysql) {
     error_log('delete');
     //var_dump($_POST);
-    $sql = "DELETE FROM PHOTO WHERE PHOTONUM = ? ";
+    $sql = "DELETE FROM PRODUCT WHERE NUM = ? ";
 
-    $photonum = $_POST["photonum"];
+    $num = $_POST["num"];
     //$_POST["name"];
 
     //SQLの実行準備
     if($stmt = $mysql -> prepare($sql)){
         //SQLの実行準備成功
         //変数のバインド（商品番号,商品名,カテゴリ,値段）
-        $stmt -> bind_param("s",$photonum);
+        $stmt -> bind_param("s",$num);
         //SQLの実行
         $stmt -> execute();
         if($stmt->affected_rows == 1){
@@ -194,35 +195,42 @@ $instance->close();
     <body>
         <div id="calendar" ></div>
         <div id="msgarea" class="form-group mb-3">
-            <form action="./gohan.php" method="post" enctype="multipart/form-data" name="gohan">
+            <form action="./moneykeeps.php" method="post" enctype="multipart/form-data" name="moneykeeps">
             <div class="container">
-            <input type="hidden" name="photonum" id="photonum" value="">
-            <input type="hidden" name="prev_photoname" id="prev_photoname" value="">
+            <input type="hidden" name="num" id="num" value="">
+            <input type="hidden" name="prev_photo" id="prev_photo" value="">
                 <div class="col-xs-2">
                 <br>
                 <input type="text" class="form-control" name="date" placeholder="日付" value="" id="date">
                 <br>
                 <input type="text" class="form-control" name="name" placeholder="名前" value="" id="name">
                 <br>
-                <input type="text" class="form-control" name="calory" placeholder="カロリー" value="" id="calory">
+                <input type="text" class="form-control" name="money" placeholder="値段" value="" id="money">
                 <br>
+               
                 <select name="category" id="category" class="form-select form-select-sm">
-                    <option value="1">朝ごはん</option>
-                    <option value="2">昼ごはん</option>
-                    <option value="3">夜ごはん</option>
-                    <option value="4">間食</option>
+                <option value="1">食費</option>
+                    <option value="2">外食費</option>
+                    <option value="3">日用品</option>
+                    <option value="4">交通費</option>
+                    <option value="5">衣服</option>
+                    <option value="6">交際費</option>
+                    <option value="7">趣味</option>
+                    <option value="8">その他</option>
                 </select><br>
+                
                 </div>
 
                 <div class="col-xs-1">
-                    <input type="file" name="photoname" class="form-control" id="photoname" onchange="changeImage()">
+                    <input type="file" name="photo" class="form-control" id="photo" onchange="changeImage()">
                 </div>
                 <div id="imgcampus"></div>
                 <br>
+            
 
                 <input type="hidden" name="operation" value="" id="operation">
-                <input type="button" class="btn btn-info btn-sm" id="submitbutton" value="新規作成" onclick="createGohan()">
-                <input type="button" class="btn btn-outline-danger btn-sm" id="deletebutton" value="消去" onclick="submit_gohan('delete')">
+                <input type="button" class="btn btn-info btn-sm" id="submitbutton" value="新規作成" onclick="createMoneykeeps()">
+                <input type="button" class="btn btn-outline-danger btn-sm" id="deletebutton" value="消去" onclick="submit_('delete')">
                 <br>
             </div>
             </form>
@@ -255,17 +263,17 @@ $instance->close();
                 events: meals,
                 dateClick: function(date, allDay, jsEvent, view) {
                     console.log('new');
-                    document.getElementById("photonum").value = "";
-                    document.getElementById("photoname").value = "";
+                    document.getElementById("num").value = "";
+                    document.getElementById("photo").value = "";
                     document.getElementById("date").value = date.dateStr;
                     document.getElementById("name").value = "";
-                    document.getElementById("calory").value = "";
+                    document.getElementById("money").value = "";
                     document.getElementById("category").value = "1";
                     var b_obj = document.getElementById("submitbutton");
                     b_obj.value = "新規作成"
                     b_obj.onclick = "";
                     b_obj.className = "btn btn-info btn-sm";
-                    b_obj.addEventListener("click", createGohan);
+                    b_obj.addEventListener("click", createMoneykeeps);
                     var d_obj = document.getElementById("deletebutton");
                     d_obj.style.display = "none";
                     var div_obj = document.getElementById("imgcampus");
@@ -274,19 +282,19 @@ $instance->close();
                 },
                 eventClick: function(info) {
                     console.log('event');
-                    document.getElementById("photonum").value = info.event.id;
+                    document.getElementById("num").value = info.event.id;
                     document.getElementById("date").value = (info.event.startStr).split('T')[0];
                     document.getElementById("name").value = info.event.title;
-                    document.getElementById("calory").value = info.event.extendedProps.calory;
+                    document.getElementById("money").value = info.event.extendedProps.calory;
                     document.getElementById("category").value = info.event.groupId;
-                    document.getElementById("photoname").value = "";
+                    document.getElementById("photo").value = "";
 
                     // 更新ボタンの表示
                     var b_obj = document.getElementById("submitbutton");
                     b_obj.value = "更新"
                     b_obj.onclick = "";
                     b_obj.className="btn btn-outline-info btn-sm";
-                    b_obj.addEventListener("click", updateGohan);
+                    b_obj.addEventListener("click", updateMoneykeeps);
                     // 削除ボタンの表示
                     var d_obj = document.getElementById("deletebutton");
                     d_obj.style.display = "block";
@@ -296,7 +304,7 @@ $instance->close();
                         div_obj.innerHTML = "";
                         var new_img = document.createElement("img");
                         new_img.src = info.event.extendedProps.description;
-                        document.getElementById("prev_photoname").value = info.event.extendedProps.description;
+                        document.getElementById("prev_photo").value = info.event.extendedProps.description;
                         new_img.width = 280;
                         div_obj.appendChild(new_img);
                     } else {
@@ -308,14 +316,14 @@ $instance->close();
             });
 
             // ボタン押すメソッド
-            function createGohan() {
-                submit_gohan('create');
+            function createMoneykeeps() {
+                submit_moneykeeps('create');
             }
-            function updateGohan() {
-                submit_gohan('update');
+            function updateMoneykeeps() {
+                submit_moneykeeps('update');
             }
             // valueに日本語入れたいから．operationをhiddenにしてパラメータとして送るように変更
-            function submit_gohan(op) {
+            function submit_moneykeeps(op) {
                 opobj = document.getElementById('operation');
                 opobj.value = op;
                 document.gohan.submit();
