@@ -2,7 +2,7 @@
 define("DB_HOST","localhost");
 define("DB_USER","root");
 define("DB_PASS","root");
-define("DB_NAME","MONEEYKEEPS");
+define("DB_NAME","MONEYKEEPS");
 define("DB_CHARSET","utf8mb4");
 
 //session_start();
@@ -28,40 +28,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST ) {
 // 検索と表示
 // DB接続
 // DB検索   
-$sql = "SELECT * FROM PHOTO";
+$sql = "SELECT * FROM PRODUCT";
 //SQLの実行準備
 $meals = [];
 if ($result = $instance->query($sql)) {
     while ($row = $result->fetch_assoc()) {
-        $photonum = $row['photonum'];
-        $photoname = $row['PHOTONAME'];
+        $num = $row['NUM'];
         $date = $row['DATE'];
-        $category = $row['CATEGORY'];
-        $calory = $row['CALORY'];
         $name = $row['NAME'];
-        $meals += [ "$photonum" => ["$photoname", "$date", "$category", "$calory", "$name"]];
+        $money = $row['MONEY'];
+        $category = $row['CATEGORY'];
+        $photo = $row['PHOTO'];
+        $memo = $row['MEMO'];
+        $meals += [ "$num" => ["$date", "$name", "$money", "$category", "$photo" , "$memo"]];
     }
 }
 
 // 更新
 function update($mysql) {
-    if (isset($_FILES['photoname']) && is_uploaded_file($_FILES['photoname']['tmp_name'])) {
+    if (isset($_FILES['name']) && is_uploaded_file($_FILES['name']['tmp_name'])) {
         error_log('upload');
-        $image_name = uploadImage($_FILES['photoname']);
+        $image_name = uploadImage($_FILES['name']);
         error_log('upload ok');
     } else {
         $image_name =  $_POST['prev_photoname'];
     }
 
     // ===== 更新処理 =====
-    $sql = "UPDATE PHOTO SET PHOTONAME = ?, DATE = ?,CATEGORY = ?, CALORY = ?, NAME =? where photonum = ?";
+    $sql = "UPDATE PRODUCT SET DATE = ?, NAME = ?, MONEY = ?, CATEGORY = ?, PHOTO =? , MEMO = ? where num = ?";
     $_POST["name"];
 
     if($stmt = $mysql -> prepare($sql)){
         error_log("call prepared statement");
         //SQLの実行準備成功
         //変数のバインド（商品番号,商品名,カテゴリ,値段）
-        $stmt -> bind_param("sssisi",$image_name,$_POST["date"],$_POST["category"],$_POST["calory"],$_POST["name"], $_POST['photonum']);
+        $stmt -> bind_param("ssisssi",$image_name,$_POST["date"],$_POST["category"],$_POST["money"],$_POST["name"], $_POST['num'],$_POST['MEMO']);
         //SQLの実行
         $stmt -> execute();
         error_log("execute ps");
@@ -73,20 +74,20 @@ function update($mysql) {
 // 登録
 function create($mysql) {
     error_log('create');
-    if (isset($_FILES['photoname']) && is_uploaded_file($_FILES['photoname']['tmp_name'])) {
+    if (isset($_FILES['PHOTO']) && is_uploaded_file($_FILES['PHOTO']['tmp_name'])) {
         error_log('upload');
-        $image_name = uploadImage($_FILES['photoname']);
+        $image_name = uploadImage($_FILES['PHOTO']);
         error_log('upload ok');
     }
 
-    $sql = "INSERT INTO PHOTO(PHOTONAME,DATE,CATEGORY,CALORY,NAME) VALUES(?,?,?,?,?)";
+    $sql = "INSERT INTO PRODUCT(date,name,money,category,photo,memo) VALUES(?,?,?,?,?,?)";
     //$_POST["name"];
     /*<p class="text-red-600"><?= $errmessage?></p>*/
     if($stmt = $mysql -> prepare($sql)){
         error_log("call prepared statement");
         //SQLの実行準備成功
         //変数のバインド（商品番号,商品名,カテゴリ,値段）
-        $stmt -> bind_param("sssis",$image_name,$_POST["date"],$_POST["category"],$_POST["calory"],$_POST["name"]);
+        $stmt -> bind_param("ssisss",$image_name,$_POST["date"],$_POST["name"],$_POST["money"],$_POST["category"],$_POST["photo"],$_POST["memo"]);
         //SQLの実行
         $stmt -> execute();
         error_log("execute ps");
@@ -202,9 +203,9 @@ $instance->close();
                 <br>
                 <input type="text" class="form-control" name="date" placeholder="日付" value="" id="date">
                 <br>
-                <input type="text" class="form-control" name="name" placeholder="名前" value="" id="name">
+                <input type="text" class="form-control" name="name" placeholder="商品名" value="" id="name">
                 <br>
-                <input type="text" class="form-control" name="calory" placeholder="カロリー" value="" id="calory">
+                <input type="text" class="form-control" name="calory" placeholder="" value="" id="calory">
                 <br>
                 <select name="category" id="category" class="form-select form-select-sm">
                     <option value="1">朝ごはん</option>
