@@ -192,13 +192,15 @@
         </style>
     </head>
     <body>
-    <div class="header">moneykeeps</div>
-        <div class="left">
-            <ul>
-                <!---#はリンク先。・はCSSで消す。--->
-                <li><a href="#">カレンダー</a></li>
-                <li><a href="#">グラフ</a></li> 
-            </ul>
+        <div class="header">
+        <div class="header-logo">moneykeeps</div>
+            <div class="list">
+                <ul>
+                    <!---#はリンク先。・はCSSで消す。--->
+                    <li><a href="#">カレンダー</a></li>
+                    <li><a href="#">グラフ</a></li> 
+                </ul>
+            </div>
         </div>
 
         <div id="calendar" ></div>
