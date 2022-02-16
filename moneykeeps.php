@@ -168,14 +168,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
         <title>moneykeeps</title>
-        <div class="header">moneykeeps</div>
-        <div class="left">
-            <ul>
-                <!---#はリンク先。・はCSSで消す。--->
-                <li><a href="#">カレンダー</a></li>
-                <li><a href="#">グラフ</a></li> 
-            </ul>
-        </div>
         <style>
             body {
                 display: flex;
@@ -200,6 +192,15 @@
         </style>
     </head>
     <body>
+    <div class="header">moneykeeps</div>
+        <div class="left">
+            <ul>
+                <!---#はリンク先。・はCSSで消す。--->
+                <li><a href="#">カレンダー</a></li>
+                <li><a href="#">グラフ</a></li> 
+            </ul>
+        </div>
+
         <div id="calendar" ></div>
         <div id="msgarea" class="form-group mb-3">
             <form action="./gohan.php" method="post" enctype="multipart/form-data" name="gohan">
