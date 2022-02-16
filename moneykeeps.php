@@ -1,158 +1,158 @@
 <?php
-define("DB_HOST","localhost");
-define("DB_USER","root");
-define("DB_PASS","root");
-define("DB_NAME","gohan");
-define("DB_CHARSET","utf8mb4");
+// define("DB_HOST","localhost");
+// define("DB_USER","root");
+// define("DB_PASS","root");
+// define("DB_NAME","gohan");
+// define("DB_CHARSET","utf8mb4");
 
 //session_start();
 //データベースの読み込み
-$instance = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
-if(! $instance -> connect_error){
-    //正常に接続できた場合の処理
-    $instance -> set_charset(DB_CHARSET);
-}
+// $instance = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
+// if(! $instance -> connect_error){
+//     //正常に接続できた場合の処理
+//     $instance -> set_charset(DB_CHARSET);
+// }
 
 // 分岐処理（登録，更新，削除
-if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST ) {
-    if ($_POST['operation'] == "update") {
-        update($instance);
-    } else if ($_POST['operation'] == "create") {
-        error_log("call create");
-        create($instance);
-    } else if ($_POST['operation'] == "delete") {
-        delete($instance);
-    }
-}
+// if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST ) {
+//     if ($_POST['operation'] == "update") {
+//         update($instance);
+//     } else if ($_POST['operation'] == "create") {
+//         error_log("call create");
+//         create($instance);
+//     } else if ($_POST['operation'] == "delete") {
+//         delete($instance);
+//     }
+// }
 
 // 検索と表示
 // DB接続
 // DB検索   
-$sql = "SELECT * FROM PHOTO";
+// $sql = "SELECT * FROM PHOTO";
 //SQLの実行準備
-$meals = [];
-if ($result = $instance->query($sql)) {
-    while ($row = $result->fetch_assoc()) {
-        $photonum = $row['photonum'];
-        $photoname = $row['PHOTONAME'];
-        $date = $row['DATE'];
-        $category = $row['CATEGORY'];
-        $calory = $row['CALORY'];
-        $name = $row['NAME'];
-        $meals += [ "$photonum" => ["$photoname", "$date", "$category", "$calory", "$name"]];
-    }
-}
+// $meals = [];
+// if ($result = $instance->query($sql)) {
+//     while ($row = $result->fetch_assoc()) {
+//         $photonum = $row['photonum'];
+//         $photoname = $row['PHOTONAME'];
+//         $date = $row['DATE'];
+//         $category = $row['CATEGORY'];
+//         $calory = $row['CALORY'];
+//         $name = $row['NAME'];
+//         $meals += [ "$photonum" => ["$photoname", "$date", "$category", "$calory", "$name"]];
+//     }
+// }
 
 // 更新
-function update($mysql) {
-    if (isset($_FILES['photoname']) && is_uploaded_file($_FILES['photoname']['tmp_name'])) {
-        error_log('upload');
-        $image_name = uploadImage($_FILES['photoname']);
-        error_log('upload ok');
-    } else {
-        $image_name =  $_POST['prev_photoname'];
-    }
+// function update($mysql) {
+//     if (isset($_FILES['photoname']) && is_uploaded_file($_FILES['photoname']['tmp_name'])) {
+//         error_log('upload');
+//         $image_name = uploadImage($_FILES['photoname']);
+//         error_log('upload ok');
+//     } else {
+//         $image_name =  $_POST['prev_photoname'];
+//     }
 
-    // ===== 更新処理 =====
-    $sql = "UPDATE PHOTO SET PHOTONAME = ?, DATE = ?,CATEGORY = ?, CALORY = ?, NAME =? where photonum = ?";
-    $_POST["name"];
+//     // ===== 更新処理 =====
+//     $sql = "UPDATE PHOTO SET PHOTONAME = ?, DATE = ?,CATEGORY = ?, CALORY = ?, NAME =? where photonum = ?";
+//     $_POST["name"];
 
-    if($stmt = $mysql -> prepare($sql)){
-        error_log("call prepared statement");
-        //SQLの実行準備成功
-        //変数のバインド（商品番号,商品名,カテゴリ,値段）
-        $stmt -> bind_param("sssisi",$image_name,$_POST["date"],$_POST["category"],$_POST["calory"],$_POST["name"], $_POST['photonum']);
-        //SQLの実行
-        $stmt -> execute();
-        error_log("execute ps");
-        $mysql->commit();
-        $stmt -> close();
-    }
-}
+//     if($stmt = $mysql -> prepare($sql)){
+//         error_log("call prepared statement");
+//         //SQLの実行準備成功
+//         //変数のバインド（商品番号,商品名,カテゴリ,値段）
+//         $stmt -> bind_param("sssisi",$image_name,$_POST["date"],$_POST["category"],$_POST["calory"],$_POST["name"], $_POST['photonum']);
+//         //SQLの実行
+//         $stmt -> execute();
+//         error_log("execute ps");
+//         $mysql->commit();
+//         $stmt -> close();
+//     }
+// }
 
-// 登録
-function create($mysql) {
-    error_log('create');
-    if (isset($_FILES['photoname']) && is_uploaded_file($_FILES['photoname']['tmp_name'])) {
-        error_log('upload');
-        $image_name = uploadImage($_FILES['photoname']);
-        error_log('upload ok');
-    }
+// // 登録
+// function create($mysql) {
+//     error_log('create');
+//     if (isset($_FILES['photoname']) && is_uploaded_file($_FILES['photoname']['tmp_name'])) {
+//         error_log('upload');
+//         $image_name = uploadImage($_FILES['photoname']);
+//         error_log('upload ok');
+//     }
 
-    $sql = "INSERT INTO PHOTO(PHOTONAME,DATE,CATEGORY,CALORY,NAME) VALUES(?,?,?,?,?)";
+//     $sql = "INSERT INTO PHOTO(PHOTONAME,DATE,CATEGORY,CALORY,NAME) VALUES(?,?,?,?,?)";
     //$_POST["name"];
     /*<p class="text-red-600"><?= $errmessage?></p>*/
-    if($stmt = $mysql -> prepare($sql)){
-        error_log("call prepared statement");
-        //SQLの実行準備成功
-        //変数のバインド（商品番号,商品名,カテゴリ,値段）
-        $stmt -> bind_param("sssis",$image_name,$_POST["date"],$_POST["category"],$_POST["calory"],$_POST["name"]);
-        //SQLの実行
-        $stmt -> execute();
-        error_log("execute ps");
-        $mysql->commit();
-        $stmt -> close();
-    }
-    //$instance -> close();
-}
+//     if($stmt = $mysql -> prepare($sql)){
+//         error_log("call prepared statement");
+//         //SQLの実行準備成功
+//         //変数のバインド（商品番号,商品名,カテゴリ,値段）
+//         $stmt -> bind_param("sssis",$image_name,$_POST["date"],$_POST["category"],$_POST["calory"],$_POST["name"]);
+//         //SQLの実行
+//         $stmt -> execute();
+//         error_log("execute ps");
+//         $mysql->commit();
+//         $stmt -> close();
+//     }
+//     //$instance -> close();
+// }
 
 // 削除
-function delete($mysql) {
-    error_log('delete');
-    //var_dump($_POST);
-    $sql = "DELETE FROM PHOTO WHERE PHOTONUM = ? ";
+// function delete($mysql) {
+//     error_log('delete');
+//     //var_dump($_POST);
+//     $sql = "DELETE FROM PHOTO WHERE PHOTONUM = ? ";
 
-    $photonum = $_POST["photonum"];
-    //$_POST["name"];
+//     $photonum = $_POST["photonum"];
+//     //$_POST["name"];
 
-    //SQLの実行準備
-    if($stmt = $mysql -> prepare($sql)){
-        //SQLの実行準備成功
-        //変数のバインド（商品番号,商品名,カテゴリ,値段）
-        $stmt -> bind_param("s",$photonum);
-        //SQLの実行
-        $stmt -> execute();
-        if($stmt->affected_rows == 1){
-            //更新成功コミット処理
-            $mysql->commit();
-        }else{
-            //更新失敗
-            $mysql -> rollback();
-            //$_SESSION["errmessage"] = "商品情報新登録ができませんでした";
-        }
-    }    
-}
+//     //SQLの実行準備
+//     if($stmt = $mysql -> prepare($sql)){
+//         //SQLの実行準備成功
+//         //変数のバインド（商品番号,商品名,カテゴリ,値段）
+//         $stmt -> bind_param("s",$photonum);
+//         //SQLの実行
+//         $stmt -> execute();
+//         if($stmt->affected_rows == 1){
+//             //更新成功コミット処理
+//             $mysql->commit();
+//         }else{
+//             //更新失敗
+//             $mysql -> rollback();
+//             //$_SESSION["errmessage"] = "商品情報新登録ができませんでした";
+//         }
+//     }    
+// }
 
-function uploadImage(array $file)
-{
-    // 画像のファイル名から拡張子を取得（例：.png）
-    $image_extension = strrchr($file['name'], '.');
+// function uploadImage(array $file)
+// {
+//     // 画像のファイル名から拡張子を取得（例：.png）
+//     $image_extension = strrchr($file['name'], '.');
  
-    // 画像のファイル名を作成（YmdHis: 2021-01-01 00:00:00 ならば 20210101000000）
-    $image_name = date('YmdHis') . $image_extension;
+//     // 画像のファイル名を作成（YmdHis: 2021-01-01 00:00:00 ならば 20210101000000）
+//     $image_name = date('YmdHis') . $image_extension;
  
-    // 保存先のディレクトリ
-    $directory = './imgs/';
+//     // 保存先のディレクトリ
+//     $directory = './imgs/';
  
-    // 画像のパス
-    $image_path = $directory . $image_name;
+//     // 画像のパス
+//     $image_path = $directory . $image_name;
  
-    // 画像を設置
-    move_uploaded_file($file['tmp_name'], $image_path);
+//     // 画像を設置
+//     move_uploaded_file($file['tmp_name'], $image_path);
  
-    error_log('move ok');
-    // 画像ファイルの場合->ファイル名をreturn
-    if (exif_imagetype($image_path)) {
-        return $image_path;
-    }
+//     error_log('move ok');
+//     // 画像ファイルの場合->ファイル名をreturn
+//     if (exif_imagetype($image_path)) {
+//         return $image_path;
+//     }
  
-    // 画像ファイル以外の場合
-    error_log('This file is not an image file.');
-    exit;
-}
+//     // 画像ファイル以外の場合
+//     error_log('This file is not an image file.');
+//     exit;
+// }
 
-// mysqlコネクションをクローズ
-$instance->close();
+// // mysqlコネクションをクローズ
+// $instance->close();
 
 ?>
 
@@ -167,7 +167,15 @@ $instance->close();
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-        <title>とりあえずカレンダー</title>
+        <title>moneykeeps</title>
+        <div class="header">moneykeeps</div>
+        <div class="left">
+            <ul>
+                <!---#はリンク先。・はCSSで消す。--->
+                <li><a href="#">カレンダー</a></li>
+                <li><a href="#">グラフ</a></li> 
+            </ul>
+        </div>
         <style>
             body {
                 display: flex;
