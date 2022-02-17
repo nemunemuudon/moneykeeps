@@ -1,0 +1,31 @@
+.header{
+    background-color: #67e4ec;
+    color: blue;
+    height: 90px;
+    font-size:50px;
+    width: 100%;
+    display: block;
+    clear: both;
+    font-family: 'Amatic SC', cursive;
+    padding-left: 20px;
+}
+.list{
+    height:auto;
+    background-color: #bafaff;
+    font-size: 25px;
+    font-family: 'Amatic SC', cursive;
+    float: left;
+    padding-right:20px;
+    padding-bottom: 100%;
+    padding-top: 10px;
+}
+li{
+    list-style: none;
+}
+body {
+    display: block;
+}
+html{
+    background-color: #f2feff;
+}
+
