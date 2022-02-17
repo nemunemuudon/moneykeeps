@@ -1,5 +1,5 @@
 .header{
-    background-color: #26d0c9;
+    background-color: #67e4ec;
     color: #fff;
     height: 90px;
     font-size:50px;
@@ -10,15 +10,15 @@
 }
 .list{
     height:auto;
-    background-color: aqua;
+    background-color: #bafaff;
     font-size: 25px;
     font-family: 'Amatic SC', cursive;
+    float: left;
+
 }
 li{
     list-style: none;
-}
-.contents{
-    float: left;
+
 }
 body {
     display: block;
@@ -28,6 +28,8 @@ body {
     min-width: 600px;
     max-height: fit-content;
     width: 850px;
+    float: left;
+
 }
 #msgarea {
     position:relative;
@@ -36,8 +38,13 @@ body {
     margin-left: 10px;
     width: 400px;
     border: 1px solid;
+    float: left;
+
 }
 /* イベントのタイトルに時間を表示させない */
 .fc-event-time {
     display: none;
+}
+html{
+    background-color: #f2feff;
 }
