@@ -169,6 +169,7 @@ $instance->close();
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
+<<<<<<< HEAD
         <title>moneykeeps</title>
     </head>
     <body>
@@ -177,6 +178,33 @@ $instance->close();
             <li><a href="#">入力</a></li>
             <li><a href="#">グラフ</a></li>
         </ul>
+=======
+        <title>とりあえずカレンダー</title>
+        <style>
+            body {
+                display: flex;
+            }
+            #calendar {
+                max-width: 850px;
+                min-width: 600px;
+                max-height: fit-content;
+                width: 850px;
+            }
+            #msgarea {
+                position:relative;
+                top: 10px;
+                margin-left: 10px;
+                width: 400px;
+                border: 1px solid;
+            }
+            /* イベントのタイトルに時間を表示させない */
+            .fc-event-time {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+>>>>>>> parent of 3e1875c (header)
         <div id="calendar" ></div>
         <div id="msgarea" class="form-group mb-3">
             <form action="./gohan.php" method="post" enctype="multipart/form-data" name="gohan">
