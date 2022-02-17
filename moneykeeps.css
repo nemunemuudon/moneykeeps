@@ -10,7 +10,15 @@
 }
 .list{
     height:auto;
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+    background-color: #bafaff;
+=======
+    background-color: #a9f9ff;
+>>>>>>> Stashed changes
+=======
     background-color: aqua;
+>>>>>>> parent of 2f551e1 (floatleft)
     font-size: 25px;
     font-family: 'Amatic SC', cursive;
 }
@@ -22,6 +30,7 @@ li{
 }
 body {
     display: block;
+    background-color: #f5feff;
 }
 #calendar {
     max-width: 850px;
