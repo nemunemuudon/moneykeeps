@@ -33,14 +33,14 @@ $sql = "SELECT * FROM PRODUCT";
 $meals = [];
 if ($result = $instance->query($sql)) {
     while ($row = $result->fetch_assoc()) {
-        $num = $row['NUM'];
+        $num = $row['num'];
         $photo = $row['PHOTO'];
         $date = $row['DATE'];
         $category = $row['CATEGORY'];
         $money = $row['MONEY'];
         $name = $row['NAME'];
-        $memo = $row['MEMO'];
-        $meals += [ "$num" => ["$photo", "$date", "$category", "$money", "$name","$memo"]];
+       // $memo = $row['MEMO'];
+        $meals += [ "$num" => ["$photo", "$date", "$category", "$money", "$name"]];
     }
 }
 
@@ -55,14 +55,14 @@ function update($mysql) {
     }
 
     // ===== 更新処理 =====
-    $sql = "UPDATE PRODUCT SET PHOTO = ?, DATE = ?,CATEGORY = ?, MONEY = ?, NAME =? , MEMO =? where num = ?";
+    $sql = "UPDATE PRODUCT SET PHOTO = ?, DATE = ?,CATEGORY = ?, MONEY = ?, NAME =? , where num = ?";
     $_POST["name"];
 
     if($stmt = $mysql -> prepare($sql)){
         error_log("call prepared statement");
         //SQLの実行準備成功
         //変数のバインド（商品番号,商品名,カテゴリ,値段）
-        $stmt -> bind_param("sssisis",$image_name,$_POST["date"],$_POST["category"],$_POST["money"],$_POST["name"], $_POST['num'],$_POST["memo"]);
+        $stmt -> bind_param("sssisis",$image_name,$_POST["date"],$_POST["category"],$_POST["money"],$_POST["name"], $_POST['num']);
         //SQLの実行
         $stmt -> execute();
         error_log("execute ps");
@@ -80,14 +80,14 @@ function create($mysql) {
         error_log('upload ok');
     }
 
-    $sql = "INSERT INTO PRODUCT(NUM,DATE,NAME,MONEY,CATEGORY,PHOTO,MEMO) VALUES(?,?,?,?,?,?)";
+    $sql = "INSERT INTO PRODUCT(NUM,DATE,NAME,MONEY,CATEGORY,PHOTO) VALUES(?,?,?,?,?)";
     //$_POST["name"];
     /*<p class="text-red-600"><?= $errmessage?></p>*/
     if($stmt = $mysql -> prepare($sql)){
         error_log("call prepared statement");
         //SQLの実行準備成功
         //変数のバインド（商品番号,商品名,カテゴリ,値段）
-        $stmt -> bind_param("sssiss",$image_name,$_POST["date"],$_POST["category"],$_POST["money"],$_POST["name"],$_POST["memo"]);
+        $stmt -> bind_param("sssis",$image_name,$_POST["date"],$_POST["category"],$_POST["money"],$_POST["name"]);
         //SQLの実行
         $stmt -> execute();
         error_log("execute ps");
@@ -245,7 +245,7 @@ $instance->close();
                     end: "<?php echo $meal[1] . ' ' . ($meal[2] == 1 ? '08:00:00' : ($meal[2] == 2 ? '13:00:00' : ($meal[2] == 3 ? '20:00:00' : '16:00:00'))); ?>",
                     groupId: "<?php echo $meal[2]; ?>",
                     title: "<?php echo $meal[4]; ?>",
-                    calory: "<?php echo $meal[3]; ?>",
+                    money: "<?php echo $meal[3]; ?>",
                     description: "<?php echo $meal[0]; ?>",
                     allDay: false,
                 },
@@ -285,7 +285,7 @@ $instance->close();
                     document.getElementById("num").value = info.event.id;
                     document.getElementById("date").value = (info.event.startStr).split('T')[0];
                     document.getElementById("name").value = info.event.title;
-                    document.getElementById("money").value = info.event.extendedProps.calory;
+                    document.getElementById("money").value = info.event.extendedProps.money;
                     document.getElementById("category").value = info.event.groupId;
                     document.getElementById("photo").value = "";
 
@@ -326,7 +326,7 @@ $instance->close();
             function submit_moneykeeps(op) {
                 opobj = document.getElementById('operation');
                 opobj.value = op;
-                document.gohan.submit();
+                document.moneykeeps.submit();
             }
             // 画像選択時の処理
             function changeImage() {
