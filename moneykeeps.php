@@ -179,8 +179,8 @@ $instance->close();
         <div class="contents">
             <div class="list">
                 <ul>
-                    <li><a href="#" class="text-blue">input</li>
-                    <li><a href="#" class="text-blue">graph</li>
+                    <li><a href="moneykeeps.php" class="text-blue">input</li>
+                    <li><a href="graph.php" class="text-blue">graph</li>
                     <li><a href="#" class="text-blue">setting</li>
                 </ul>
             </div>
