@@ -8,6 +8,9 @@
     clear: both;
     font-family: 'Amatic SC', cursive;
 }
+.contents{
+    float: left;
+}
 .list{
     height:auto;
     background-color: aqua;
@@ -17,9 +20,7 @@
 li{
     list-style: none;
 }
-.contents{
-    float: left;
-}
+
 body {
     display: block;
 }

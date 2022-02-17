@@ -168,13 +168,21 @@ $instance->close();
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<<<<<<< Updated upstream
         <link href="https://fonts.googleapis.com/css?family=Amatic+SC:700 rel="stylesheet">        <title>moneykeeps</title>
+=======
+        <link rel="stylesheet" href="moneykeeps.css">
+
+
+        <title>moneykeeps</title>
+>>>>>>> Stashed changes
     </head>
     <body>
         <div class="header">moneykeeps</div>
         <div class="contents">
             <div class="list">
                 <ul>
+<<<<<<< Updated upstream
                     <li><a href="#">入力</a></li>
                     <li><a href="#">グラフ</a></li>
                 </ul>
@@ -189,10 +197,23 @@ $instance->close();
                 <div class="container">
                 <input type="hidden" name="photonum" id="photonum" value="">
                 <input type="hidden" name="prev_photoname" id="prev_photoname" value="">
+=======
+                    <li><input type='buttom' value="input></li>
+                    <li>graph</li>
+                </ul>
+            </div>
+            <div id="calendar" ></div>
+            <div id="msgarea" class="form-group mb-3">
+                <form action="./moneykeeps.php" method="post" enctype="multipart/form-data" name="moneykeeps">
+                <div class="container">
+                <input type="hidden" name="num" id="num" value="">
+                <input type="hidden" name="prev_photo" id="prev_photo" value="">
+>>>>>>> Stashed changes
                     <div class="col-xs-2">
                     <br>
                     <input type="text" class="form-control" name="date" placeholder="日付" value="" id="date">
                     <br>
+<<<<<<< Updated upstream
                     <input type="text" class="form-control" name="name" placeholder="商品名" value="" id="name">
                     <br>
                     <input type="text" class="form-control" name="calory" placeholder="" value="" id="calory">
@@ -218,6 +239,38 @@ $instance->close();
                 </div>
             </div>
         
+=======
+                    <input type="text" class="form-control" name="name" placeholder="名前" value="" id="name">
+                    <br>
+                    <input type="text" class="form-control" name="money" placeholder="値段" value="" id="money">
+                    <br>
+                
+                    <select name="category" id="category" class="form-select form-select-sm">
+                    <option value="1">食費</option>
+                        <option value="2">外食費</option>
+                        <option value="3">日用品</option>
+                        <option value="4">交通費</option>
+                        <option value="5">衣服</option>
+                        <option value="6">交際費</option>
+                        <option value="7">趣味</option>
+                        <option value="8">その他</option>
+                    </select><br>
+                    
+                    </div>
+
+                    <div class="col-xs-1">
+                        <input type="file" name="photo" class="form-control" id="photo" onchange="changeImage()">
+                    </div>
+                    <div id="imgcampus"></div>
+                    <br>
+                
+
+                    <input type="hidden" name="operation" value="" id="operation">
+                    <input type="button" class="btn btn-info btn-sm" id="submitbutton" value="新規作成" onclick="createMoneykeeps()">
+                    <input type="button" class="btn btn-outline-danger btn-sm" id="deletebutton" value="消去" onclick="submit_('delete')">
+                    <br>
+                </div>
+>>>>>>> Stashed changes
                 </form>
             </div>
         </div>
