@@ -173,7 +173,7 @@ $instance->close();
         <title>moneykeeps</title>
     </head>
     <body>
-        <div class="header">moneykeeps</div>
+        <div class="header">moeykeeps</div>
         <div class="contents">
             <div class="list">
                 <ul>
