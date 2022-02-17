@@ -168,58 +168,49 @@ $instance->close();
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-        <link href="https://fonts.googleapis.com/css?family=Amatic+SC:700 rel="stylesheet">        <title>moneykeeps</title>
+
+        <title>moneykeeps</title>
     </head>
     <body>
         <div class="header">moneykeeps</div>
-        <div class="contents">
-            <div class="list">
-                <ul>
-                    <li><a href="#">入力</a></li>
-                    <li><a href="#">グラフ</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="contents">
-            <div id="calendar" ></div>
-        </div>
-        <div class="contents">
-            <div id="msgarea" class="form-group mb-3">
-                <form action="./gohan.php" method="post" enctype="multipart/form-data" name="gohan">
-                <div class="container">
-                <input type="hidden" name="photonum" id="photonum" value="">
-                <input type="hidden" name="prev_photoname" id="prev_photoname" value="">
-                    <div class="col-xs-2">
-                    <br>
-                    <input type="text" class="form-control" name="date" placeholder="日付" value="" id="date">
-                    <br>
-                    <input type="text" class="form-control" name="name" placeholder="商品名" value="" id="name">
-                    <br>
-                    <input type="text" class="form-control" name="calory" placeholder="" value="" id="calory">
-                    <br>
-                    <select name="category" id="category" class="form-select form-select-sm">
-                        <option value="1">朝ごはん</option>
-                        <option value="2">昼ごはん</option>
-                        <option value="3">夜ごはん</option>
-                        <option value="4">間食</option>
-                    </select><br>
-                    </div>
-
-                    <div class="col-xs-1">
-                        <input type="file" name="photoname" class="form-control" id="photoname" onchange="changeImage()">
-                    </div>
-                    <div id="imgcampus"></div>
-                    <br>
-
-                    <input type="hidden" name="operation" value="" id="operation">
-                    <input type="button" class="btn btn-info btn-sm" id="submitbutton" value="新規作成" onclick="createGohan()">
-                    <input type="button" class="btn btn-outline-danger btn-sm" id="deletebutton" value="消去" onclick="submit_gohan('delete')">
-                    <br>
+        <ul>
+            <li><a href="#">入力</a></li>
+            <li><a href="#">グラフ</a></li>
+        </ul>
+        <div id="calendar" ></div>
+        <div id="msgarea" class="form-group mb-3">
+            <form action="./gohan.php" method="post" enctype="multipart/form-data" name="gohan">
+            <div class="container">
+            <input type="hidden" name="photonum" id="photonum" value="">
+            <input type="hidden" name="prev_photoname" id="prev_photoname" value="">
+                <div class="col-xs-2">
+                <br>
+                <input type="text" class="form-control" name="date" placeholder="日付" value="" id="date">
+                <br>
+                <input type="text" class="form-control" name="name" placeholder="商品名" value="" id="name">
+                <br>
+                <input type="text" class="form-control" name="calory" placeholder="" value="" id="calory">
+                <br>
+                <select name="category" id="category" class="form-select form-select-sm">
+                    <option value="1">朝ごはん</option>
+                    <option value="2">昼ごはん</option>
+                    <option value="3">夜ごはん</option>
+                    <option value="4">間食</option>
+                </select><br>
                 </div>
+
+                <div class="col-xs-1">
+                    <input type="file" name="photoname" class="form-control" id="photoname" onchange="changeImage()">
+                </div>
+                <div id="imgcampus"></div>
+                <br>
+
+                <input type="hidden" name="operation" value="" id="operation">
+                <input type="button" class="btn btn-info btn-sm" id="submitbutton" value="新規作成" onclick="createGohan()">
+                <input type="button" class="btn btn-outline-danger btn-sm" id="deletebutton" value="消去" onclick="submit_gohan('delete')">
+                <br>
             </div>
-        
-                </form>
-            </div>
+            </form>
         </div>
         <script>
             const meals = [

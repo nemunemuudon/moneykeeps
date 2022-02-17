@@ -6,19 +6,6 @@
     width: 100%;
     display: block;
     clear: both;
-    font-family: 'Amatic SC', cursive;
-}
-.list{
-    height:auto;
-    background-color: aqua;
-    font-size: 25px;
-    font-family: 'Amatic SC', cursive;
-}
-li{
-    list-style: none;
-}
-.contents{
-    float: left;
 }
 body {
     display: block;
