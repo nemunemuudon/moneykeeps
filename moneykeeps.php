@@ -2,11 +2,7 @@
 define("DB_HOST","localhost");
 define("DB_USER","root");
 define("DB_PASS","root");
-<<<<<<< HEAD
 define("DB_NAME","moneykeeps");
-=======
-define("DB_NAME","MONEYKEEPS");
->>>>>>> e434be9ca4e9750b3e85abd24a4168aed26b135a
 define("DB_CHARSET","utf8mb4");
 
 //session_start();
@@ -38,7 +34,6 @@ $meals = [];
 if ($result = $instance->query($sql)) {
     while ($row = $result->fetch_assoc()) {
         $num = $row['NUM'];
-<<<<<<< HEAD
         $photo = $row['PHOTO'];
         $date = $row['DATE'];
         $category = $row['CATEGORY'];
@@ -46,21 +41,11 @@ if ($result = $instance->query($sql)) {
         $name = $row['NAME'];
         $memo = $row['MEMO'];
         $meals += [ "$num" => ["$photo", "$date", "$category", "$money", "$name","$memo"]];
-=======
-        $date = $row['DATE'];
-        $name = $row['NAME'];
-        $money = $row['MONEY'];
-        $category = $row['CATEGORY'];
-        $photo = $row['PHOTO'];
-        $memo = $row['MEMO'];
-        $meals += [ "$num" => ["$date", "$name", "$money", "$category", "$photo" , "$memo"]];
->>>>>>> e434be9ca4e9750b3e85abd24a4168aed26b135a
     }
 }
 
 // 更新
 function update($mysql) {
-<<<<<<< HEAD
     if (isset($_FILES['photo']) && is_uploaded_file($_FILES['photo']['tmp_name'])) {
         error_log('upload');
         $image_name = uploadImage($_FILES['photo']);
@@ -71,29 +56,13 @@ function update($mysql) {
 
     // ===== 更新処理 =====
     $sql = "UPDATE PRODUCT SET PHOTO = ?, DATE = ?,CATEGORY = ?, MONEY = ?, NAME =? , MEMO =? where num = ?";
-=======
-    if (isset($_FILES['name']) && is_uploaded_file($_FILES['name']['tmp_name'])) {
-        error_log('upload');
-        $image_name = uploadImage($_FILES['name']);
-        error_log('upload ok');
-    } else {
-        $image_name =  $_POST['prev_photoname'];
-    }
-
-    // ===== 更新処理 =====
-    $sql = "UPDATE PRODUCT SET DATE = ?, NAME = ?, MONEY = ?, CATEGORY = ?, PHOTO =? , MEMO = ? where num = ?";
->>>>>>> e434be9ca4e9750b3e85abd24a4168aed26b135a
     $_POST["name"];
 
     if($stmt = $mysql -> prepare($sql)){
         error_log("call prepared statement");
         //SQLの実行準備成功
         //変数のバインド（商品番号,商品名,カテゴリ,値段）
-<<<<<<< HEAD
         $stmt -> bind_param("sssisis",$image_name,$_POST["date"],$_POST["category"],$_POST["money"],$_POST["name"], $_POST['num'],$_POST["memo"]);
-=======
-        $stmt -> bind_param("ssisssi",$image_name,$_POST["date"],$_POST["category"],$_POST["money"],$_POST["name"], $_POST['num'],$_POST['MEMO']);
->>>>>>> e434be9ca4e9750b3e85abd24a4168aed26b135a
         //SQLの実行
         $stmt -> execute();
         error_log("execute ps");
@@ -105,7 +74,6 @@ function update($mysql) {
 // 登録
 function create($mysql) {
     error_log('create');
-<<<<<<< HEAD
     if (isset($_FILES['photo']) && is_uploaded_file($_FILES['photo']['tmp_name'])) {
         error_log('upload');
         $image_name = uploadImage($_FILES['photo']);
@@ -113,26 +81,13 @@ function create($mysql) {
     }
 
     $sql = "INSERT INTO PRODUCT(NUM,DATE,NAME,MONEY,CATEGORY,PHOTO,MEMO) VALUES(?,?,?,?,?,?)";
-=======
-    if (isset($_FILES['PHOTO']) && is_uploaded_file($_FILES['PHOTO']['tmp_name'])) {
-        error_log('upload');
-        $image_name = uploadImage($_FILES['PHOTO']);
-        error_log('upload ok');
-    }
-
-    $sql = "INSERT INTO PRODUCT(date,name,money,category,photo,memo) VALUES(?,?,?,?,?,?)";
->>>>>>> e434be9ca4e9750b3e85abd24a4168aed26b135a
     //$_POST["name"];
     /*<p class="text-red-600"><?= $errmessage?></p>*/
     if($stmt = $mysql -> prepare($sql)){
         error_log("call prepared statement");
         //SQLの実行準備成功
         //変数のバインド（商品番号,商品名,カテゴリ,値段）
-<<<<<<< HEAD
         $stmt -> bind_param("sssiss",$image_name,$_POST["date"],$_POST["category"],$_POST["money"],$_POST["name"],$_POST["memo"]);
-=======
-        $stmt -> bind_param("ssisss",$image_name,$_POST["date"],$_POST["name"],$_POST["money"],$_POST["category"],$_POST["photo"],$_POST["memo"]);
->>>>>>> e434be9ca4e9750b3e85abd24a4168aed26b135a
         //SQLの実行
         $stmt -> execute();
         error_log("execute ps");
@@ -146,26 +101,16 @@ function create($mysql) {
 function delete($mysql) {
     error_log('delete');
     //var_dump($_POST);
-<<<<<<< HEAD
     $sql = "DELETE FROM PRODUCT WHERE NUM = ? ";
 
     $num = $_POST["num"];
-=======
-    $sql = "DELETE FROM PHOTO WHERE PHOTONUM = ? ";
-
-    $photonum = $_POST["photonum"];
->>>>>>> e434be9ca4e9750b3e85abd24a4168aed26b135a
     //$_POST["name"];
 
     //SQLの実行準備
     if($stmt = $mysql -> prepare($sql)){
         //SQLの実行準備成功
         //変数のバインド（商品番号,商品名,カテゴリ,値段）
-<<<<<<< HEAD
         $stmt -> bind_param("s",$num);
-=======
-        $stmt -> bind_param("s",$photonum);
->>>>>>> e434be9ca4e9750b3e85abd24a4168aed26b135a
         //SQLの実行
         $stmt -> execute();
         if($stmt->affected_rows == 1){
@@ -216,14 +161,12 @@ $instance->close();
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="moneykeeps.css">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<<<<<<< HEAD
 
         <title>とりあえずカレンダー</title>
         <style>
@@ -289,60 +232,8 @@ $instance->close();
                 <input type="button" class="btn btn-info btn-sm" id="submitbutton" value="新規作成" onclick="createMoneykeeps()">
                 <input type="button" class="btn btn-outline-danger btn-sm" id="deletebutton" value="消去" onclick="submit_('delete')">
                 <br>
-=======
-        <link href="https://fonts.googleapis.com/css?family=Amatic+SC:700 rel="stylesheet">        <title>moneykeeps</title>
-    </head>
-    <body>
-        <div class="header">moneykeeps</div>
-        <div class="contents">
-            <div class="list">
-                <ul>
-                    <li><a href="#">入力</a></li>
-                    <li><a href="#">グラフ</a></li>
-                </ul>
             </div>
-        </div>
-        <div class="contents">
-            <div id="calendar" ></div>
-        </div>
-        <div class="contents">
-            <div id="msgarea" class="form-group mb-3">
-                <form action="./gohan.php" method="post" enctype="multipart/form-data" name="gohan">
-                <div class="container">
-                <input type="hidden" name="photonum" id="photonum" value="">
-                <input type="hidden" name="prev_photoname" id="prev_photoname" value="">
-                    <div class="col-xs-2">
-                    <br>
-                    <input type="text" class="form-control" name="date" placeholder="日付" value="" id="date">
-                    <br>
-                    <input type="text" class="form-control" name="name" placeholder="商品名" value="" id="name">
-                    <br>
-                    <input type="text" class="form-control" name="calory" placeholder="" value="" id="calory">
-                    <br>
-                    <select name="category" id="category" class="form-select form-select-sm">
-                        <option value="1">朝ごはん</option>
-                        <option value="2">昼ごはん</option>
-                        <option value="3">夜ごはん</option>
-                        <option value="4">間食</option>
-                    </select><br>
-                    </div>
-
-                    <div class="col-xs-1">
-                        <input type="file" name="photoname" class="form-control" id="photoname" onchange="changeImage()">
-                    </div>
-                    <div id="imgcampus"></div>
-                    <br>
-
-                    <input type="hidden" name="operation" value="" id="operation">
-                    <input type="button" class="btn btn-info btn-sm" id="submitbutton" value="新規作成" onclick="createGohan()">
-                    <input type="button" class="btn btn-outline-danger btn-sm" id="deletebutton" value="消去" onclick="submit_gohan('delete')">
-                    <br>
-                </div>
->>>>>>> e434be9ca4e9750b3e85abd24a4168aed26b135a
-            </div>
-        
-                </form>
-            </div>
+            </form>
         </div>
         <script>
             const meals = [
