@@ -181,6 +181,7 @@ $instance->close();
                 <ul>
                     <li><a href="#" class="text-blue">input</li>
                     <li><a href="#" class="text-blue">graph</li>
+                    <li><a href="#" class="text-blue">setting</li>
                 </ul>
             </div>
             <div id="calendar" ></div>
