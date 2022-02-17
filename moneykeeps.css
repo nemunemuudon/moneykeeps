@@ -14,11 +14,12 @@
     font-size: 25px;
     font-family: 'Amatic SC', cursive;
     float: left;
-
+    padding-right:20px;
+    padding-bottom: 100%;
+    padding-top: 10px;
 }
 li{
     list-style: none;
-
 }
 body {
     display: block;
@@ -29,17 +30,20 @@ body {
     max-height: fit-content;
     width: 850px;
     float: left;
+    color:black;
+    font-family: 'Amatic SC', cursive;
 
 }
 #msgarea {
+    text-align: center;
     position:relative;
     top: 10px;
     left: 100px;
     margin-left: 10px;
     width: 400px;
-    border: 1px solid;
     float: left;
-
+    font-family: 'Amatic SC', cursive;
+    font-size: 10px
 }
 /* イベントのタイトルに時間を表示させない */
 .fc-event-time {

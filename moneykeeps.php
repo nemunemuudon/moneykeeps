@@ -168,17 +168,19 @@ $instance->close();
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="moneykeeps.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
 
 
         <title>moneykeeps</title>
     </head>
     <body>
-        <div class="header">moeykeeps</div>
+        <div class="header">moneykeeps</div>
         <div class="contents">
             <div class="list">
                 <ul>
-                    <li>input</li>
-                    <li>graph</li>
+                    <li><a href="#" class="text-blue">input</li>
+                    <li><a href="#" class="text-blue">graph</li>
                 </ul>
             </div>
             <div id="calendar" ></div>
@@ -188,6 +190,7 @@ $instance->close();
                         <input type="hidden" name="num" id="num" value="">
                         <input type="hidden" name="prev_photo" id="prev_photo" value="">
                             <div class="col-xs-2">
+                                    <h2>input<h2>
                                 <br>
                                 <input type="text" class="form-control" name="date" placeholder="日付" value="" id="date">
                                 <br>
