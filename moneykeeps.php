@@ -25,6 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $_POST ) {
     }
 }
 
+error_log("test");
+
 // 検索と表示
 // DB接続
 // DB検索   
